@@ -1,0 +1,364 @@
+<mxfile host="app.diagrams.net" modified="2026-09-17T00:00:00.000Z" agent="Claude" version="24.0.0" type="device">
+  <diagram name="SOC Lab - Detection Pipeline" id="soc-lab-1">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1080" pageHeight="920" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="SOC Lab &#8212; Detection &amp; Incident Response Pipeline" style="text;html=1;fontSize=20;fontStyle=1;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="700" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="attacker" value="Kali Linux / Atomic Red Team&lt;br&gt;(Attack Simulation Host)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="60" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="win_client" value="Windows 10/11 Client&lt;br&gt;(Domain-Joined)&lt;br&gt;+ Wazuh Agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="200" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="dc" value="Windows Server 2022&lt;br&gt;Domain Controller (AD)&lt;br&gt;+ Wazuh Agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="200" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lin_client" value="Ubuntu/Linux Client&lt;br&gt;+ Wazuh Agent (auditd, FIM)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="200" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_atk_win" value="Initial access&lt;br&gt;(e.g., T1059 &#8212; Execution)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#b85450;fontColor=#b85450;fontSize=10;" edge="1" parent="1" source="attacker" target="win_client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_atk_lin" value="Simulated attack&lt;br&gt;(e.g., T1110 &#8212; Brute Force)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#b85450;fontColor=#b85450;fontSize=10;" edge="1" parent="1" source="attacker" target="lin_client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_win_dc_auth" value="Domain auth / GPO" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=1;strokeColor=#000000;fontSize=9;" edge="1" parent="1" source="dc" target="win_client" exitX="0" exitY="0.3" entryX="1" entryY="0.3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_win_dc_attack" value="Lateral movement&lt;br&gt;(Kerberoasting / DCSync)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#b85450;fontColor=#b85450;fontSize=10;dashed=1;exitX=1;exitY=0.7;entryX=0;entryY=0.7;" edge="1" parent="1" source="win_client" target="dc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dc_wm" value="Security Event Log&lt;br&gt;(4624, 4768, 4769)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="dc" target="wazuh_manager">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wazuh_manager" value="Wazuh Manager&lt;br&gt;Rules &#183; Decoders &#183; Correlation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="340" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wazuh_indexer" value="Wazuh Indexer&lt;br&gt;OpenSearch &#8212; Storage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="340" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="wazuh_dashboard" value="Wazuh Dashboard&lt;br&gt;Analyst UI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="340" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_win_wm" value="Telemetry: Sysmon, FIM, Event Log" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="win_client" target="wazuh_manager">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_lin_wm" value="Telemetry: auditd, syslog, FIM" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="lin_client" target="wazuh_manager">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_wm_wi" value="Indexed alerts/events" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_manager" target="wazuh_indexer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_wi_wd" value="Query / visualize" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_indexer" target="wazuh_dashboard">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="shuffle" value="Shuffle SOAR&lt;br&gt;Alert Automation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="480" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="thehive" value="TheHive&lt;br&gt;Case Management" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="480" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cortex" value="Cortex&lt;br&gt;Automated Enrichment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="480" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="misp" value="MISP&lt;br&gt;Threat Intel Platform" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="480" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_wm_shuffle" value="Webhook: high-severity alert" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_manager" target="shuffle">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_shuffle_thehive" value="Create case + observables" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="shuffle" target="thehive">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_thehive_cortex" value="Run analyzers on observables" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="thehive" target="cortex">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cortex_misp" value="IOC correlation" style="edgeStyle=orthogonalEdgeStyle;html=1;startArrow=block;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="cortex" target="misp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="analyst" value="SOC Analyst (You)&lt;br&gt;Triage, Investigate, Respond" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="620" width="300" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_wd_analyst" value="Investigate alerts" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_dashboard" target="analyst">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_thehive_analyst" value="Triage &amp; document findings" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="thehive" target="analyst">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_analyst_win" value="Contain / Remediate" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#82b366;fontColor=#82b366;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="analyst" target="win_client">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="15" y="655" />
+              <mxPoint x="15" y="235" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_analyst_lin" value="Contain / Remediate" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#82b366;fontColor=#82b366;fontSize=10;dashed=1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="analyst" target="lin_client">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065" y="655" />
+              <mxPoint x="1065" y="235" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+
+        <mxCell id="badge_attacker" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="400" y="70" width="18" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="winic_t0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F25022;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="150.0" y="210.0" width="8.1" height="8.1" as="geometry" />
+        </mxCell>
+        <mxCell id="winic_t1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#7FBA00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="159.9" y="210.0" width="8.1" height="8.1" as="geometry" />
+        </mxCell>
+        <mxCell id="winic_t2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#00A4EF;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="150.0" y="219.9" width="8.1" height="8.1" as="geometry" />
+        </mxCell>
+        <mxCell id="winic_t3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFB900;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="159.9" y="219.9" width="8.1" height="8.1" as="geometry" />
+        </mxCell>
+        <mxCell id="dcic_t0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F25022;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="440.0" y="210.0" width="8.1" height="8.1" as="geometry" />
+        </mxCell>
+        <mxCell id="dcic_t1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#7FBA00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="449.9" y="210.0" width="8.1" height="8.1" as="geometry" />
+        </mxCell>
+        <mxCell id="dcic_t2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#00A4EF;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="440.0" y="219.9" width="8.1" height="8.1" as="geometry" />
+        </mxCell>
+        <mxCell id="dcic_t3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFB900;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="449.9" y="219.9" width="8.1" height="8.1" as="geometry" />
+        </mxCell>
+        <mxCell id="linic_body" style="ellipse;whiteSpace=wrap;html=1;fillColor=#141414;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="732.2" y="213.3" width="13.6" height="17.6" as="geometry" />
+        </mxCell>
+        <mxCell id="linic_belly" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="734.6" y="216.8" width="8.8" height="13.2" as="geometry" />
+        </mxCell>
+        <mxCell id="linic_head" style="ellipse;whiteSpace=wrap;html=1;fillColor=#141414;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="734.8" y="208.7" width="8.4" height="8.4" as="geometry" />
+        </mxCell>
+        <mxCell id="linic_beak" style="triangle;direction=south;whiteSpace=wrap;html=1;fillColor=#e8a33d;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="737.5" y="215.1" width="3.1" height="2.1" as="geometry" />
+        </mxCell>
+        <mxCell id="wm_body" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.6;" vertex="1" parent="1">
+          <mxGeometry x="183.4" y="350" width="13.1" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="wm_ln0" style="rounded=0;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="185.3" y="353.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wm_led0" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a67c00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="192.5" y="352.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="wm_ln1" style="rounded=0;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="185.3" y="358.3" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wm_led1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a67c00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="192.5" y="356.9" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="wm_ln2" style="rounded=0;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="185.3" y="362.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wm_led2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a67c00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="192.5" y="361.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="wi_body" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.6;" vertex="1" parent="1">
+          <mxGeometry x="443.4" y="350" width="13.1" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="wi_ln0" style="rounded=0;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="445.3" y="353.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wi_led0" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a67c00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="452.5" y="352.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="wi_ln1" style="rounded=0;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="445.3" y="358.3" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wi_led1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a67c00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="452.5" y="356.9" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="wi_ln2" style="rounded=0;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="445.3" y="362.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wi_led2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a67c00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="452.5" y="361.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="wd_body" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.6;" vertex="1" parent="1">
+          <mxGeometry x="703.4" y="350" width="13.1" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="wd_ln0" style="rounded=0;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="705.3" y="353.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wd_led0" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a67c00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="712.5" y="352.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="wd_ln1" style="rounded=0;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="705.3" y="358.3" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wd_led1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a67c00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="712.5" y="356.9" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="wd_ln2" style="rounded=0;html=1;fillColor=none;strokeColor=#a67c00;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="705.3" y="362.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wd_led2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a67c00;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="712.5" y="361.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="shuffle_body" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.6;" vertex="1" parent="1">
+          <mxGeometry x="53.4" y="490" width="13.1" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="shuffle_ln0" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="55.3" y="493.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="shuffle_led0" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="62.5" y="492.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="shuffle_ln1" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="55.3" y="498.3" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="shuffle_led1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="62.5" y="496.9" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="shuffle_ln2" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="55.3" y="502.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="shuffle_led2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="62.5" y="501.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="thehive_body" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.6;" vertex="1" parent="1">
+          <mxGeometry x="293.4" y="490" width="13.1" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="thehive_ln0" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="295.3" y="493.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="thehive_led0" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="302.5" y="492.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="thehive_ln1" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="295.3" y="498.3" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="thehive_led1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="302.5" y="496.9" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="thehive_ln2" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="295.3" y="502.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="thehive_led2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="302.5" y="501.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="cortex_body" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.6;" vertex="1" parent="1">
+          <mxGeometry x="533.4" y="490" width="13.1" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="cortex_ln0" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="535.3" y="493.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cortex_led0" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="542.5" y="492.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="cortex_ln1" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="535.3" y="498.3" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cortex_led1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="542.5" y="496.9" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="cortex_ln2" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="535.3" y="502.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cortex_led2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="542.5" y="501.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="misp_body" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.6;" vertex="1" parent="1">
+          <mxGeometry x="773.4" y="490" width="13.1" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="misp_ln0" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="775.3" y="493.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="misp_led0" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="782.5" y="492.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="misp_ln1" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="775.3" y="498.3" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="misp_led1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="782.5" y="496.9" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="misp_ln2" style="rounded=0;html=1;fillColor=none;strokeColor=#6b4c85;strokeWidth=1.3;" vertex="1" parent="1">
+          <mxGeometry x="775.3" y="502.8" width="6.3" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="misp_led2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#6b4c85;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="782.5" y="501.4" width="2.9" height="2.9" as="geometry" />
+        </mxCell>
+        <mxCell id="badge_analyst" style="ellipse;whiteSpace=wrap;html=1;fillColor=#4a7a3d;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="400" y="630" width="18" height="18" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend_row" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="720" width="900" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_red_line" style="rounded=0;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="35" y="745" width="35" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_red_title" value="Simulated Attack" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="737" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_red_sub" value="Attacker-generated traffic" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="80" y="757" width="230" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_div1" style="rounded=0;html=1;fillColor=none;strokeColor=#dddddd;" vertex="1" parent="1">
+          <mxGeometry x="320" y="750" width="1" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_black_line" style="rounded=0;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="335" y="744" width="35" height="3" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_black_title" value="Data Flow" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="737" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_black_sub" value="Normal telemetry / agent data" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="380" y="757" width="230" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_div2" style="rounded=0;html=1;fillColor=none;strokeColor=#dddddd;" vertex="1" parent="1">
+          <mxGeometry x="620" y="750" width="1" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_green_line" style="rounded=0;html=1;fillColor=none;strokeColor=#82b366;dashed=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="635" y="745" width="35" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_green_title" value="Manual Response" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="737" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_green_sub" value="Analyst containment action" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="680" y="757" width="230" height="18" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mitre_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="815" width="900" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="mitre_badge" style="ellipse;whiteSpace=wrap;html=1;fillColor=#333333;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="32" y="828" width="24" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="mitre_title" value="MITRE ATT&amp;CK Techniques Emulated" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="822" width="500" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="mitre_sub" value="T1059 Execution &#183; T1110 Brute Force &#183; T1558/T1003 Kerberoasting &amp; DCSync" style="text;html=1;align=left;verticalAlign=middle;fontSize=9;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="75" y="842" width="700" height="18" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
