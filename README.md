@@ -37,12 +37,15 @@ The editable `.drawio` source is also in [`/diagrams`](diagrams).
 **Threat intel**
 - MISP
 
+**Observability**
+- Grafana (deployment in progress)
+
 ## Planned Additions
 
 Observability and log aggregation layer:
 
+- Prometheus
 - Loki
-- Grafana
 - Graylog
 
 ## Architecture
