@@ -23,20 +23,20 @@
           <mxGeometry x="720" y="200" width="220" height="70" as="geometry" />
         </mxCell>
 
-        <mxCell id="e_atk_win" value="Initial access&lt;br&gt;(e.g., T1059 &#8212; Execution)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#b85450;fontColor=#b85450;fontSize=10;" edge="1" parent="1" source="attacker" target="win_client">
+        <mxCell id="e_atk_win" value="Initial access&lt;br&gt;(e.g., T1059 &#8212; Execution)" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#b85450;fontColor=#b85450;fontSize=10;" edge="1" parent="1" source="attacker" target="win_client">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_atk_lin" value="Simulated attack&lt;br&gt;(e.g., T1110 &#8212; Brute Force)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#b85450;fontColor=#b85450;fontSize=10;" edge="1" parent="1" source="attacker" target="lin_client">
+        <mxCell id="e_atk_lin" value="Simulated attack&lt;br&gt;(e.g., T1110 &#8212; Brute Force)" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#b85450;fontColor=#b85450;fontSize=10;" edge="1" parent="1" source="attacker" target="lin_client">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="e_win_dc_auth" value="Domain auth / GPO" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=1;strokeColor=#000000;fontSize=9;" edge="1" parent="1" source="dc" target="win_client" exitX="0" exitY="0.3" entryX="1" entryY="0.3">
+        <mxCell id="e_win_dc_auth" value="Domain auth / GPO" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=1;strokeColor=#000000;fontSize=9;" edge="1" parent="1" source="dc" target="win_client" exitX="0" exitY="0.3" entryX="1" entryY="0.3">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_win_dc_attack" value="Lateral movement&lt;br&gt;(Kerberoasting / DCSync)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#b85450;fontColor=#b85450;fontSize=10;dashed=1;exitX=1;exitY=0.7;entryX=0;entryY=0.7;" edge="1" parent="1" source="win_client" target="dc">
+        <mxCell id="e_win_dc_attack" value="Lateral movement&lt;br&gt;(Kerberoasting / DCSync)" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#b85450;fontColor=#b85450;fontSize=10;dashed=1;exitX=1;exitY=0.7;entryX=0;entryY=0.7;" edge="1" parent="1" source="win_client" target="dc">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_dc_wm" value="Security Event Log&lt;br&gt;(4624, 4768, 4769)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="dc" target="wazuh_manager">
+        <mxCell id="e_dc_wm" value="Security Event Log&lt;br&gt;(4624, 4768, 4769)" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="dc" target="wazuh_manager">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -50,16 +50,16 @@
           <mxGeometry x="690" y="340" width="220" height="70" as="geometry" />
         </mxCell>
 
-        <mxCell id="e_win_wm" value="Telemetry: Sysmon, FIM, Event Log" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="win_client" target="wazuh_manager">
+        <mxCell id="e_win_wm" value="Telemetry: Sysmon, FIM, Event Log" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="win_client" target="wazuh_manager">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_lin_wm" value="Telemetry: auditd, syslog, FIM" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="lin_client" target="wazuh_manager">
+        <mxCell id="e_lin_wm" value="Telemetry: auditd, syslog, FIM" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="lin_client" target="wazuh_manager">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_wm_wi" value="Indexed alerts/events" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_manager" target="wazuh_indexer">
+        <mxCell id="e_wm_wi" value="Indexed alerts/events" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_manager" target="wazuh_indexer">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_wi_wd" value="Query / visualize" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_indexer" target="wazuh_dashboard">
+        <mxCell id="e_wi_wd" value="Query / visualize" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_indexer" target="wazuh_dashboard">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -76,16 +76,16 @@
           <mxGeometry x="760" y="480" width="200" height="70" as="geometry" />
         </mxCell>
 
-        <mxCell id="e_wm_shuffle" value="Webhook: high-severity alert" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_manager" target="shuffle">
+        <mxCell id="e_wm_shuffle" value="Webhook: high-severity alert" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_manager" target="shuffle">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_shuffle_thehive" value="Create case + observables" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="shuffle" target="thehive">
+        <mxCell id="e_shuffle_thehive" value="Create case + observables" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="shuffle" target="thehive">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_thehive_cortex" value="Run analyzers on observables" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="thehive" target="cortex">
+        <mxCell id="e_thehive_cortex" value="Run analyzers on observables" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="thehive" target="cortex">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_cortex_misp" value="IOC correlation" style="edgeStyle=orthogonalEdgeStyle;html=1;startArrow=block;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="cortex" target="misp">
+        <mxCell id="e_cortex_misp" value="IOC correlation" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;startArrow=block;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="cortex" target="misp">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
@@ -93,14 +93,14 @@
           <mxGeometry x="390" y="620" width="300" height="70" as="geometry" />
         </mxCell>
 
-        <mxCell id="e_wd_analyst" value="Investigate alerts" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_dashboard" target="analyst">
+        <mxCell id="e_wd_analyst" value="Investigate alerts" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="wazuh_dashboard" target="analyst">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_thehive_analyst" value="Triage &amp; document findings" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="thehive" target="analyst">
+        <mxCell id="e_thehive_analyst" value="Triage &amp; document findings" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#000000;fontSize=10;" edge="1" parent="1" source="thehive" target="analyst">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <mxCell id="e_analyst_win" value="Contain / Remediate" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#82b366;fontColor=#82b366;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="analyst" target="win_client">
+        <mxCell id="e_analyst_win" value="Contain / Remediate" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#82b366;fontColor=#82b366;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="analyst" target="win_client">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="15" y="655" />
@@ -108,7 +108,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="e_analyst_lin" value="Contain / Remediate" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeWidth=2;strokeColor=#82b366;fontColor=#82b366;fontSize=10;dashed=1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="analyst" target="lin_client">
+        <mxCell id="e_analyst_lin" value="Contain / Remediate" style="edgeStyle=orthogonalEdgeStyle;html=1;flowAnimation=1;endArrow=block;strokeWidth=2;strokeColor=#82b366;fontColor=#82b366;fontSize=10;dashed=1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="analyst" target="lin_client">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1065" y="655" />
